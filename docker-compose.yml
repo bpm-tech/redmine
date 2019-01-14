@@ -1,0 +1,49 @@
+version: "2"
+services:
+  datastore:
+    image: busybox
+    volumes:
+#      - mysql-data:/var/lib/mysql
+      - bundle_install:/app/bendor/bundle
+      - bundle:/app/.bundle
+      - node_modules:/app/node_modules
+
+  mysql:
+    image: mysql:5.7
+    environment: 
+      MYSQL_ROOT_PASSWORD: redmine
+      MYSQL_DATABASE: redmine_development
+      MYSQL_USER: redmine
+      MYSQL_PASSWORD: redmine
+    networks:
+      - default
+    ports:
+      - '3306:3306'
+#    volumes_from:
+#      - datastore
+
+  app:
+    build:
+      context: . 
+      dockerfile: Dockerfile-dev
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mysql
+    networks:
+      - default
+    volumes:
+      - .:/app
+    volumes_from:
+      - datastore
+    command: ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+
+volumes:
+#  mysql-data:
+#    driver: local
+  bundle_install:
+    driver: local
+  bundle:
+    driver: local
+  node_modules:
+    driver: local
