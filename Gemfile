@@ -77,6 +77,7 @@ end
 
 group :development do
   gem "yard"
+  gem "pry-byebug"
 end
 
 group :test do
