@@ -41,6 +41,10 @@
 /Gemfile.lock
 /Gemfile.local
 
-
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/.ssh/*
+
+/docker-compose_production.yml
+/redmine_dev.sql
+/redminedump*
