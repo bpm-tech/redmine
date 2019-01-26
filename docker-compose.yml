@@ -36,7 +36,8 @@ services:
       - default
     volumes:
       - .:/app
-      - nginx_sock:/app/tmp/pids
+      - nginx_pids:/app/tmp/pids
+      - nginx_sock:/app/tmp/sockets
     volumes_from:
       - datastore
     command: ["bundle", "exec", "unicorn", "-c", "config/unicorn.rb"]
@@ -61,4 +62,5 @@ volumes:
     driver: local
   node_modules:
     driver: local
+  nginx_pids:
   nginx_sock:
