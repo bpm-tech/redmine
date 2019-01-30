@@ -26,6 +26,8 @@ services:
     build:
       context: . 
       dockerfile: Dockerfile-dev
+    tty: true
+    stdin_open: true
     ports:
       - '3000:3000'
     depends_on:
@@ -34,10 +36,23 @@ services:
       - default
     volumes:
       - .:/app
+      - nginx_pids:/app/tmp/pids
+      - nginx_sock:/app/tmp/sockets
     volumes_from:
       - datastore
-    command: ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+    command: ["bundle", "exec", "unicorn", "-c", "config/unicorn.rb"]
 
+  nginx:
+    image: nginx:1.15.8
+    ports:
+      - '80:80'
+    depends_on:
+      - app
+    volumes:
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf
+      - nginx_sock:/var/lib/redmine
+
+    
 volumes:
 #  mysql-data:
 #    driver: local
@@ -47,3 +62,5 @@ volumes:
     driver: local
   node_modules:
     driver: local
+  nginx_pids:
+  nginx_sock:
