@@ -24,4 +24,8 @@ Rails.application.configure do
   config.active_support.deprecation = :log
 
   config.require_master_key = true
+
+  # ECS用の設定
+  config.log_level = :info
+  config.logger = Logger.new(STDOUT)
 end
