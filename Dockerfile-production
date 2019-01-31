@@ -6,6 +6,7 @@ RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 RUN apt-get update -qq && \
  apt-get install -y --no-install-recommends \
   build-essential \
+  vim \
   nodejs \
   libpq-dev \
   nfs-common \

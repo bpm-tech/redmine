@@ -43,7 +43,7 @@ services:
     command: ["bundle", "exec", "unicorn", "-c", "config/unicorn.rb"]
 
   nginx:
-    image: nginx:1.15.8
+    image: redmineplus_nginx_production:latest
     ports:
       - '80:80'
     depends_on:
